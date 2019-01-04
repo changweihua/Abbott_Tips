@@ -9,9 +9,15 @@ import i18n from "./i18n/i18n";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import { faLanguage } from "@fortawesome/free-solid-svg-icons";
+import { faAmilia } from "@fortawesome/free-brands-svg-icons";
+import { faAngry } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(faCoffee);
+library.add(faLanguage);
+library.add(faAmilia);
+library.add(faAngry);
 Vue.component("fa-icon", FontAwesomeIcon);
 
 Vue.config.productionTip = false;

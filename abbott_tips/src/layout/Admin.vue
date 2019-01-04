@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-container class="main">
-      <el-aside :width="tabWidth+'px'">
+      <el-aside :class="{ asideCollapse: isCollapse }">
         <div>
-          <div class="isClossTab" @click="isClossTabFun">
-            <i :class="isCollapse?'el-icon-d-arrow-right':'el-icon-d-arrow-left'" ></i>
+          <div class="isClossTab">
+            <fa-icon :icon="['fab', 'amilia']" />
           </div>
           <el-menu :class="'menu'"
             default-active="1-4-1"
@@ -20,22 +20,49 @@
                 <i class="el-icon-location"></i>
                 <span slot="title">导航一</span>
               </template>
+              <el-menu-item-group>
+                <template slot="title">分组一</template>
+                <el-menu-item index="1-1">选项1</el-menu-item>
+                <el-menu-item index="1-2">选项2</el-menu-item>
+              </el-menu-item-group>
             </el-submenu>
           </el-menu>
         </div>
         </el-aside>
         <el-container>
           <el-header class="main-header">
-            <el-dropdown trigger="click" @command="handleCommand">
-              <span class="el-dropdown-link">
-                <img src="avator.jpg" alt="">
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="logout"><fa-icon icon="coffee"></fa-icon> {{$t("logout")}}</el-dropdown-item>
-                <el-dropdown-item @click.native="toggleLang('zh')" :disabled="$i18n.locale == 'zh'">中文</el-dropdown-item>
-                <el-dropdown-item @click.native="toggleLang('en')" :disabled="$i18n.locale == 'en'">English</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
+            <div id="topbar-wrap">
+              <el-row type="flex" justify="space-between">
+                <el-col :span="1">
+                  <i :class="isCollapse?'el-icon-d-arrow-right':'el-icon-d-arrow-left'" @click="isClossTabFun" ></i>
+                </el-col>
+                <el-col :span="15">
+                  <el-row type="flex" class="row-right" justify="end">
+                    <el-col :span="5">
+                      <a class="animated fadeIn">{{$t('m.topbar.sayHi')}}</a>
+                    </el-col>
+                    <el-col :span="2">
+                      <fa-icon icon="language"></fa-icon>
+                    </el-col>
+                    <el-col :span="2">
+                      <fa-icon icon="coffee"></fa-icon>
+                    </el-col>
+                    <el-col :span="2">
+                      <el-dropdown trigger="click" @command="handleCommand">
+                        <span class="el-dropdown-link">
+                          <img src="avator.jpg" alt="">
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                          <el-dropdown-item command="logout"><fa-icon icon="language"></fa-icon> {{$t("logout")}}</el-dropdown-item>
+                          <el-dropdown-item @click.native="toggleLang('zh')" :disabled="$i18n.locale == 'zh'">中文</el-dropdown-item>
+                          <el-dropdown-item @click.native="toggleLang('en')" :disabled="$i18n.locale == 'en'">English</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </el-col>
+                  </el-row>
+                </el-col>
+              </el-row>
+            </div>
           </el-header>
           <el-main>
             <el-breadcrumb separator="/" class="crumbs">
@@ -68,6 +95,48 @@ $header-height: 60px;
 $background-color: #545c64;
 $color: #fff;
 
+.el-aside {
+  width: 200px !important;
+  transition: all 0.5s;
+}
+
+.asideCollapse {
+  width: 64px !important;
+  transition: all 0.5s;
+}
+
+#topbar-wrap {
+  overflow: hidden;
+  border-bottom: 1px solid #ddd;
+  color: #353d47;
+  z-index: 4;
+  box-sizing: border-box;
+  a {
+    line-height: $header-height;
+  }
+  i {
+    font-size: 20px;
+    line-height: $header-height;
+    transition: all 0.5s;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .fa-language:hover {
+    transform: rotateY(180deg);
+  }
+  .logout {
+    text-decoration: none;
+    &:hover {
+      color: #1dc4e9;
+    }
+  }
+}
+.row-right > div {
+  text-align: center;
+  padding-right: 10px;
+}
+
 .main {
   height: 100vh;
   min-width: 800px;
@@ -96,6 +165,7 @@ $color: #fff;
   }
   .main-header {
     background-color: $background-color;
+    padding: 0;
     color: $color;
     .el-dropdown {
       cursor: pointer;
@@ -153,17 +223,17 @@ export default {
       console.log(key, keyPath);
     },
     isClossTabFun() {
-      clearInterval(this.intelval);
-      if (!this.isCollapse) {
-        this.intelval = setInterval(() => {
-          if (this.tabWidth <= 64) {
-            clearInterval(this.intelval);
-          }
-          this.tabWidth -= 1;
-        }, 1);
-      } else {
-        this.tabWidth = 200;
-      }
+      // clearInterval(this.intelval);
+      // if (!this.isCollapse) {
+      //   this.intelval = setInterval(() => {
+      //     if (this.tabWidth <= 64) {
+      //       clearInterval(this.intelval);
+      //     }
+      //     this.tabWidth -= 1;
+      //   }, 1);
+      // } else {
+      //   this.tabWidth = 200;
+      // }
       this.isCollapse = !this.isCollapse;
     },
     toggleLang(lang) {
