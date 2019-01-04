@@ -26,12 +26,12 @@
         </el-aside>
         <el-container>
           <el-header class="main-header">
-            <el-dropdown>
+            <el-dropdown trigger="click" @command="handleCommand">
               <span class="el-dropdown-link">
                 <img src="avator.jpg" alt="">
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>{{$t("logout")}}</el-dropdown-item>
+                <el-dropdown-item command="logout"><fa-icon icon="coffee"></fa-icon> {{$t("logout")}}</el-dropdown-item>
                 <el-dropdown-item @click.native="toggleLang('zh')" :disabled="$i18n.locale == 'zh'">中文</el-dropdown-item>
                 <el-dropdown-item @click.native="toggleLang('en')" :disabled="$i18n.locale == 'en'">English</el-dropdown-item>
               </el-dropdown-menu>
@@ -127,6 +127,7 @@ $color: #fff;
 
 <script>
 export default {
+  name: "AdminLayout",
   data() {
     return {
       isCollapse: false,
@@ -136,6 +137,15 @@ export default {
     };
   },
   methods: {
+    handleCommand(command) {
+      this.$message("click on item " + command);
+      if (command === "logout") {
+        localStorage.JWT_TOKEN = "";
+        this.$router.replace({
+          name: "login"
+        });
+      }
+    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },

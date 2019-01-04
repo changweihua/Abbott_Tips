@@ -1,19 +1,25 @@
 <template>
-  <transition name="el-zoom-in-top">
-    <div id="app">
-      <HelloWorld />
-    </div>
-  </transition>
+  <div id="app">
+    <transition name="el-zoom-in-center">
+      <!-- <blankLayout v-if="isLogined" />
+      <adminLayout v-else /> -->
+      <router-view />
+    </transition>
+  </div>
 </template>
 
 <script>
-import HelloWorld from "@/layout/Admin.vue";
-
 export default {
   name: "app",
-  components: {
-    HelloWorld
+  data() {
+    return {
+      isLogined: false
+    };
   }
+  // components: {
+  //   adminLayout: () => import("@/layout/Admin.vue"),
+  //   blankLayout: () => import("@/layout/Blank.vue")
+  // }
 };
 </script>
 
