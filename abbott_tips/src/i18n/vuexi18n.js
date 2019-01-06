@@ -1,8 +1,7 @@
 // load vue and vuex instance
 import Vue from "vue";
-import Vuex from "vuex";
 import store from "@/store";
-
+import axios from "axios";
 // load vuex i18n module
 import vuexI18n from "vuex-i18n";
 
@@ -20,41 +19,33 @@ import vuexI18n from "vuex-i18n";
 // helper functions for components (i.e. this.$i18n.set, this.$t) and on the vue
 // instance (i.e. Vue.i18n.set).
 Vue.use(vuexI18n.plugin, store, {
-  moduleName: 'i18n',
-  onTranslationNotFound (locale, key) {
-		return new Promise((resolve, reject) => {
-			axios.get("/api/translations/async", { locale: locale, key: key })
-        .then((result) => {
-          resolve(result.data);
-        }).catch(() => {
-          reject();
-        });
-		});
-	}
+  moduleName: "i18n",
+  onTranslationNotFound: (locale, key) => {
+	  return new Promise((resolve, reject) => {
+      axios
+        .get("/api/translations/async", { locale: locale, key: key })
+        .then(result => { resolve(result.data); })
+        .catch(result => { reject(result); });
+    });
+  }
 });
 
 // please note that you must specify the name of the vuex module if it is
 // different from i18n. i.e. Vue.use(vuexI18n.plugin, store, {moduleName: 'myName'})
 
-
 // add some translations (could also be loaded from a separate file)
 // note that it is possible to use placeholders. translations can also be
 // structured as object trees and will automatically be flattened by the the
 // plugin
-const translationsEn = {
-	"content": "This is some {type} content"
-};
+const translationsEn = {};
 
 // translations can be kept in separate files for each language
 // i.e. resources/i18n/de.json.
-const translationsDe = {
-	"My nice title": "Ein schöner Titel",
-	"content": "Dies ist ein toller Inhalt"
-};
+const translationsDe = {};
 
 // add translations directly to the application
-Vue.i18n.add('en', translationsEn);
-Vue.i18n.add('de', translationsDe);
+Vue.i18n.add("en", translationsEn);
+Vue.i18n.add("de", translationsDe);
 
 // set the start locale to use
-Vue.i18n.set('en');
+Vue.i18n.set("en");

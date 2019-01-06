@@ -72,7 +72,7 @@
               <el-breadcrumb-item>活动详情</el-breadcrumb-item>
             </el-breadcrumb>
             <div>
-              <router-view></router-view>
+              <router-view />
             </div>
           </el-main>
         <el-footer class="main-footer" height="50px">
@@ -196,6 +196,7 @@ $color: #fff;
 </style>
 
 <script>
+
 export default {
   name: "AdminLayout",
   data() {

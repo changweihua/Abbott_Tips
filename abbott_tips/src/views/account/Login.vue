@@ -4,8 +4,8 @@
     <!--login框，表单+tab标签页的组合-->
     <div class="loginFrame">
       <el-form ref="AccountForm" :model="account" :rules="rules" label-position="left" label-width="0px" class="login-container">
-        <el-form-item prop="username">
-          <el-input type="text" v-model="account.username" auto-complete="off" placeholder="请输入您的账号" />
+        <el-form-item prop="userName">
+          <el-input type="text" v-model="account.userName" auto-complete="off" placeholder="请输入您的账号" />
         </el-form-item> 
         <el-form-item prop="password">
           <el-input type="password" v-model="account.password" auto-complete="off" placeholder="请输入密码" />
@@ -21,6 +21,9 @@
 </template>
 
 <script>
+import { login } from "@/apis/account";
+// import { post } from "../../utils/http";
+
 export default {
   name: "AccountLogin",
   data() {
@@ -37,11 +40,11 @@ export default {
         backgroundRepeat: "no-repeat"
       },
       account: {
-        username: "",
+        userName: "",
         password: ""
       },
       rules: {
-        username: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        userName: [{ required: true, message: "请输入账号", trigger: "blur" }],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }]
       }
     };
@@ -51,17 +54,36 @@ export default {
       console.log("handleLoginClick");
       var vm = this;
       var account = vm.account;
-      if (account.username === "root" && account.password === "root") {
-        // var message = "<strong>登录成功！<i>" + account.username + "</i> 欢迎您！</strong>";
+      // if (account.userName === "root" && account.password === "root") {
+      //   // var message = "<strong>登录成功！<i>" + account.userName + "</i> 欢迎您！</strong>";
+      //   vm.$message({
+      //     dangerouslyUseHTMLString: true,
+      //     message: "登录成功！",
+      //     onClose() {
+      //       localStorage.JWT_TOKEN = "AAA";
+      //       vm.$router.replace("/");
+      //     }
+      //   });
+      // }
+      // await login().then(res => {
+      //   console.log(res);
+      // });
+      login(account).then(res => {
+        console.log(res);
+        window.localStorage.JWT_TOKEN = account.userName;
         vm.$message({
           dangerouslyUseHTMLString: true,
           message: "登录成功！",
           onClose() {
             localStorage.JWT_TOKEN = "AAA";
-            vm.$router.replace("/");
+            vm.$router.push({
+              name: "homeIndex"
+            });
           }
         });
-      }
+      }).catch(err => {
+        console.log(err);
+      });
     }
   }
 };
