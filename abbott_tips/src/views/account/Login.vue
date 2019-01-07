@@ -22,6 +22,7 @@
 
 <script>
 import { login } from "@/apis/account";
+// import { Victor } from "@/plugins/vertor";
 // import { post } from "../../utils/http";
 
 export default {
@@ -49,6 +50,11 @@ export default {
       }
     };
   },
+  mounted() {
+    this.$nextTick(() => {
+      // Victor("app", "abc"); // 登陆背景函数调用
+    })
+  },
   methods: {
     handleLoginClick() {
       console.log("handleLoginClick");
@@ -70,12 +76,11 @@ export default {
       // });
       login(account).then(res => {
         console.log(res);
-        window.localStorage.JWT_TOKEN = account.userName;
+        window.localStorage.JWT_TOKEN = res.token;
         vm.$message({
           dangerouslyUseHTMLString: true,
           message: "登录成功！",
           onClose() {
-            localStorage.JWT_TOKEN = "AAA";
             vm.$router.push({
               name: "homeIndex"
             });
@@ -100,7 +105,7 @@ body {
 
 .login-container {
   -webkit-border-radius: 5px;
-  border-radius: 15px;
+  border-radius: 8px;
   -moz-border-radius: 5px;
   background-clip: padding-box;
   margin: 180px auto;
