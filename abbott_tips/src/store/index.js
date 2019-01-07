@@ -7,8 +7,14 @@ import persistedState from "vuex-persistedstate";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    CURRENT_USER: {}
+  },
+  mutations: {
+    SET_CURRENT_USER (state, user) {
+      state.CURRENT_USER = user;
+    }
+  },
   actions: {},
   plugins: [
     persistedState({

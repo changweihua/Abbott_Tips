@@ -77,6 +77,7 @@ export default {
       login(account).then(res => {
         console.log(res);
         window.localStorage.JWT_TOKEN = res.token;
+        vm.$store.commit('SET_CURRENT_USER', res.user);
         vm.$message({
           dangerouslyUseHTMLString: true,
           message: "登录成功！",

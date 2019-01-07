@@ -39,7 +39,7 @@
                 <el-col :span="15">
                   <el-row type="flex" class="row-right" justify="end">
                     <el-col :span="5">
-                      <a class="animated fadeIn">{{$t('m.topbar.sayHi')}}</a>
+                      <a class="animated fadeIn">{{$t('m.topbar.sayHi')}}{{CURRENT_USER.userName}}</a>
                     </el-col>
                     <el-col :span="2">
                       <fa-icon icon="language"></fa-icon>
@@ -196,6 +196,7 @@ $color: #fff;
 </style>
 
 <script>
+import { mapStates } from "vuex";
 
 export default {
   name: "AdminLayout",
@@ -206,6 +207,9 @@ export default {
       test1: 1,
       intelval: null
     };
+  },
+  computed() {
+    mapStates(['CURRENT_USER'])
   },
   methods: {
     handleCommand(command) {

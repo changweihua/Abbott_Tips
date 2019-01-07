@@ -10,6 +10,7 @@
 import HelloWorld from "@/components/HelloWorld.vue";
 
 import { values } from "@/apis/account";
+import { userList } from "@/apis/user";
 
 export default {
   name: "home",
@@ -19,7 +20,10 @@ export default {
   mounted() {
     values().then(res => {
       console.log(res);
-    })
+    });
+    userList().then(res => {
+      console.log(res);
+    });
   }
 };
 </script>
